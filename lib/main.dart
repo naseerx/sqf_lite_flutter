@@ -15,11 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My SqfLite',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -34,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late Future<List<NotesModel>> noteList;
   DBHelper? dbHelper;
-
 
   @override
   void initState() {
@@ -57,19 +57,90 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ok'),
+        title: const Text('My SQF Lite DataBase'),
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
       ),
       body: FutureBuilder(
         future: noteList,
-        builder: (context ,AsyncSnapshot<List<NotesModel>> snspshot){
-          return ListView.builder(
-            itemCount: snspshot.data!.length,
-           itemBuilder: ( context,  index) {
-              return Card(
-                child: Text(snspshot.data![index].title),
-              );
-           },
-          );
+        builder: (context, AsyncSnapshot<List<NotesModel>> snspshot) {
+          if(snspshot.hasData){
+            return ListView.builder(
+              itemCount: snspshot.data!.length,
+              itemBuilder: (context, index) {
+                return Dismissible(
+                  direction: DismissDirection.startToEnd,
+                  background: Container(
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.red,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.delete,color: Colors.white,size: 50,),
+                      ],
+                    ),
+                  ),
+                  key: ValueKey<int>(snspshot.data![index].id!),
+                  child: Dismissible(
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.red,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.delete,color: Colors.white,size: 50,),
+                        ],
+                      ),
+                    ),
+                    key: ValueKey<int>(snspshot.data![index].id!),
+                    onDismissed: (DismissDirection direction) {
+                      setState(() {
+                        dbHelper?.deleteProduct(snspshot.data![index].id!);
+                        noteList = dbHelper!.getCartListWithUserId();
+                        snspshot.data?.remove(snspshot.data![index]);
+                      });
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.all(8),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      shadowColor: Colors.teal,
+                      elevation: 9,
+                      semanticContainer: true,
+                      child: SizedBox(
+                          height: 90,
+                          child: Center(
+                              child: ListTile(
+                                title: Text(
+                                  snspshot.data![index].title,
+                                ),
+                                subtitle: Text(
+                                  snspshot.data![index].description,
+                                ),
+                                trailing: Text(
+                                  snspshot.data![index].age.toString(),
+                                ),
+                              ))),
+                    ),
+                  ),
+                );
+              },
+            );
+          }else{
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
         },
       ),
       floatingActionButton: FloatingActionButton(

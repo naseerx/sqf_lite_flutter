@@ -6,11 +6,11 @@ class NotesModel {
   final String? email;
 
   NotesModel(
-      { this.id,
-        required this.title,
-        required this.age,
-        required this.description,
-        this.email});
+      {this.id,
+      required this.title,
+      required this.age,
+      required this.description,
+      this.email});
 
   NotesModel.fromMap(Map<String, dynamic> res)
       : id = res["id"],
@@ -19,8 +19,15 @@ class NotesModel {
         description = res["description"],
         email = res["email"];
 
-
+  //when add data to sql we send map not dart obj
+  //so we convert dart obj to map
   Map<String, Object?> toMap() {
-    return {'id':id,'title': title, 'age': age, 'description': description, 'email': email};
+    return {
+      'id': id,
+      'title': title,
+      'age': age,
+      'description': description,
+      'email': email
+    };
   }
 }
