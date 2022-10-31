@@ -38,7 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dbHelper = DBHelper();
     loadData();
@@ -63,10 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: FutureBuilder(
         future: noteList,
-        builder: (context, AsyncSnapshot<List<NotesModel>> snspshot) {
-          if(snspshot.hasData){
+        builder: (context, AsyncSnapshot<List<NotesModel>> snapshot) {
+          if(snapshot.hasData){
             return ListView.builder(
-              itemCount: snspshot.data!.length,
+              itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return Dismissible(
                   direction: DismissDirection.startToEnd,
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  key: ValueKey<int>(snspshot.data![index].id!),
+                  key: ValueKey<int>(snapshot.data![index].id!),
                   child: Dismissible(
                     direction: DismissDirection.endToStart,
                     background: Container(
@@ -101,33 +100,33 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    key: ValueKey<int>(snspshot.data![index].id!),
+                    key: ValueKey<int>(snapshot.data![index].id!),
                     onDismissed: (DismissDirection direction) {
                       setState(() {
-                        dbHelper?.deleteProduct(snspshot.data![index].id!);
+                        dbHelper?.deleteProduct(snapshot.data![index].id!);
                         noteList = dbHelper!.getCartListWithUserId();
-                        snspshot.data?.remove(snspshot.data![index]);
+                        snapshot.data?.remove(snapshot.data![index]);
                       });
                     },
                     child: Card(
                       margin: const EdgeInsets.all(8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
-                      shadowColor: Colors.teal,
-                      elevation: 9,
+                      shadowColor: Colors.amber,
+                      elevation: 4,
                       semanticContainer: true,
                       child: SizedBox(
                           height: 90,
                           child: Center(
                               child: ListTile(
                                 title: Text(
-                                  snspshot.data![index].title,
+                                  snapshot.data![index].title + '        (' + snapshot.data![index].email.toString() + ')',
                                 ),
                                 subtitle: Text(
-                                  snspshot.data![index].description,
+                                  snapshot.data![index].description,
                                 ),
                                 trailing: Text(
-                                  snspshot.data![index].age.toString(),
+                                  snapshot.data![index].age.toString(),
                                 ),
                               ))),
                     ),
@@ -145,7 +144,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: navigator,
-        child: const Icon(Icons.arrow_forward_sharp),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.deepPurple,
+        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
