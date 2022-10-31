@@ -20,7 +20,6 @@ class NotesModel {
         email = res["email"];
 
   //when add data to sql we send map not dart obj
-  //so we convert dart obj to map
   Map<String, Object?> toMap() {
     return {
       'id': id,
