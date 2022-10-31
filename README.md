@@ -1,16 +1,20 @@
-# sqf_lite_flutter
+# Hi, I'm NASEER! 👋
+#sqflite_flutter
 
-A new Flutter project.
+SQFlite is a plugin in flutter which is used to store the data. In SQFlite we perform many operations like create, delete, update, etc. This operation is called CRUD Operations. Using this we can easily store the data in a local database.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Authors
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [@Muhammad Naseer](https://www.github.com/naseerx)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## Screenshots
+<p float="left">
+  <img src="https://github.com/naseerx/sqf_lite_flutter/blob/master/screenshot/Screenshot_20221031-115552.png">
+  <img src="https://github.com/naseerx/sqf_lite_flutter/blob/master/screenshot/Screenshot_20221031-115651.png">
+</p>
+
+
