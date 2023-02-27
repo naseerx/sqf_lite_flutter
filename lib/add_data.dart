@@ -60,7 +60,7 @@ class _AddDataState extends State<AddData> {
             TextField(
               controller: email,
               decoration: InputDecoration(
-                hintText: 'email',
+                hintText: 'Email Address',
                 fillColor: const Color(0xffe9e9e9),
                 filled: true,
                 border: InputBorder.none,
@@ -81,7 +81,7 @@ class _AddDataState extends State<AddData> {
               controller: age,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: 'Age',
+                hintText: 'Your Age',
                 fillColor: const Color(0xffe9e9e9),
                 filled: true,
                 border: InputBorder.none,
